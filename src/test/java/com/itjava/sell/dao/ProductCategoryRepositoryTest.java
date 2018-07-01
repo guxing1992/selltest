@@ -12,24 +12,24 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ProductCategoryDaoTest {
+public class ProductCategoryRepositoryTest {
     @Autowired
-    private ProductCategoryDao productCategoryDao;
+    private ProductCategoryRepository productCategoryRepository;
     @Test
     public void findOneTest(){
-        ProductCategory productCategory = productCategoryDao.findById(1).get();
+        ProductCategory productCategory = productCategoryRepository.findById(1).get();
         System.out.println(productCategory.toString());
 
     }
     @Test
     public void addAProductCategory(){
-        ProductCategory productCategory = productCategoryDao.findById(2).get();
+        ProductCategory productCategory = productCategoryRepository.findById(2).get();
         productCategory.setCategoryType(15);
-        productCategoryDao.save(productCategory);
+        productCategoryRepository.save(productCategory);
     }
     @Test
     public void testfindByCategoryTypeIn(){
-        List<ProductCategory> byCategoryTypeIn = productCategoryDao.findByCategoryTypeIn(Arrays.asList(1, 15));
+        List<ProductCategory> byCategoryTypeIn = productCategoryRepository.findByCategoryTypeIn(Arrays.asList(1, 15));
         System.out.println(byCategoryTypeIn);
     }
 }

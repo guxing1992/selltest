@@ -99,4 +99,18 @@ public class ProductInfo {
     public void setProductStatus(Integer productStatus) {
         this.productStatus = productStatus;
     }
+
+    @Override
+    public String toString() {
+        return "ProductInfo{" +
+                "productId='" + productId + '\'' +
+                ", productName='" + productName + '\'' +
+                ", productPrice=" + productPrice +
+                ", productStock=" + productStock +
+                ", productDescription='" + productDescription + '\'' +
+                ", productIcon='" + productIcon + '\'' +
+                ", categoryType=" + categoryType +
+                ", productStatus=" + productStatus +
+                '}';
+    }
 }
