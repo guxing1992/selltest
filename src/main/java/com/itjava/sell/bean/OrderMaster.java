@@ -3,11 +3,14 @@ package com.itjava.sell.bean;
 import com.itjava.sell.enums.OrderStatusEnum;
 import com.itjava.sell.enums.PayStatusEnum;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.Transient;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+
 @DynamicUpdate
 @Entity
 public class OrderMaster {
@@ -22,6 +25,7 @@ public class OrderMaster {
     private Integer payStatus=PayStatusEnum.WAIT.getCode();
     private Date createTime;
     private Date updateTime;
+
 
     public String getOrderId() {
         return orderId;
