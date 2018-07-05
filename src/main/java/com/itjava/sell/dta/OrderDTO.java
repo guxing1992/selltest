@@ -1,13 +1,17 @@
 package com.itjava.sell.dta;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.itjava.sell.bean.OrderDetail;
 import com.itjava.sell.enums.OrderStatusEnum;
 import com.itjava.sell.enums.PayStatusEnum;
+import com.itjava.sell.util.serializer.Date2LongSerializer;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-
+//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDTO {
     private String orderId;
     private String buyerName;
@@ -17,8 +21,11 @@ public class OrderDTO {
     private BigDecimal orderAmount;
     private Integer orderStatus;
     private Integer payStatus;
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date createTime;
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date updateTime;
+
     private List<OrderDetail> orderDetailList;
 
     public String getOrderId() {
@@ -107,5 +114,22 @@ public class OrderDTO {
 
     public void setOrderDetailList(List<OrderDetail> orderDetailList) {
         this.orderDetailList = orderDetailList;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderDTO{" +
+                "orderId='" + orderId + '\'' +
+                ", buyerName='" + buyerName + '\'' +
+                ", buyerPhone='" + buyerPhone + '\'' +
+                ", buyerAddress='" + buyerAddress + '\'' +
+                ", buyerOpenid='" + buyerOpenid + '\'' +
+                ", orderAmount=" + orderAmount +
+                ", orderStatus=" + orderStatus +
+                ", payStatus=" + payStatus +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", orderDetailList=" + orderDetailList +
+                '}';
     }
 }
