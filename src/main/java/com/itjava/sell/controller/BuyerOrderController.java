@@ -5,6 +5,7 @@ import com.itjava.sell.dta.OrderDTO;
 import com.itjava.sell.enums.ResultEnum;
 import com.itjava.sell.exception.SellException;
 import com.itjava.sell.form.OrderForm;
+import com.itjava.sell.service.BuyerService;
 import com.itjava.sell.service.OrderService;
 import com.itjava.sell.service.impl.OrderServiceImpl;
 import com.itjava.sell.util.ResultVOUtils;
@@ -30,6 +31,8 @@ public class BuyerOrderController {
     Logger log=LoggerFactory.getLogger(BuyerOrderController.class);
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private BuyerService buyerService;
     /**
      * 创建订单
      */
@@ -69,7 +72,8 @@ public class BuyerOrderController {
     @GetMapping("/detail")
     public ResultVO detail(@RequestParam("openid") String openid,@RequestParam("orderId") String orderId){
         //TODO不安全做法
-        OrderDTO orderDTO = orderService.findOne(orderId);
+//        OrderDTO orderDTO = orderService.findOne(orderId);
+        OrderDTO orderDTO = buyerService.findOrderOne(openid, orderId);
         return ResultVOUtils.success(orderDTO);
     }
     /**
@@ -78,8 +82,9 @@ public class BuyerOrderController {
     @PostMapping("/cancel")
     public ResultVO cancel(@RequestParam("openid") String openid,@RequestParam("orderId") String orderId){
         //TODO不安全做法
-        OrderDTO orderDTO = orderService.findOne(orderId);
-        orderService.cancel(orderDTO);
+//        OrderDTO orderDTO = orderService.findOne(orderId);
+//        orderService.cancel(orderDTO);
+        buyerService.cancelOrderOne(openid,orderId);
         return ResultVOUtils.success();
     }
 }

@@ -149,6 +149,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public OrderDTO cancel(OrderDTO orderDTO) {
+        //判断订单状态
+        //修改订单状态
+        //返回库存
+        //如果已支付需要退款
+
         OrderMaster orderMaster = new OrderMaster();
         if (!orderDTO.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())){
             log.error("【取消订单】订单状态不正确, orderId={}, orderStatus={}", orderDTO.getOrderId(), orderDTO.getOrderStatus());
