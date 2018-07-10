@@ -8,7 +8,8 @@ public enum ResultEnum {
     ORDER_PAY_ERROR(17,"支付状态错误"),
     PARAM_ERROR(18,"参数不正确"),
     CART_NOT_NULL(19,"购物车不能为空"),
-    ORDER_OWNER_ERROR(20,"该订单不属于当前用户")
+    ORDER_OWNER_ERROR(20,"该订单不属于当前用户"),
+    WX_MP_ERROR(21,"微信公众账号方面错误")
     ;
     private Integer code;
     private String message;
