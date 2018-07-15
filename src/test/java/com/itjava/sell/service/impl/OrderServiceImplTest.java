@@ -10,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -46,4 +49,10 @@ public class OrderServiceImplTest {
     }
 
 
+    @Test
+    public void findList() {
+        Pageable pageable=PageRequest.of(0,2);
+        Page<OrderDTO> list = orderService.findList(pageable);
+        assertTrue("查询所有的订单列表",list.getTotalElements()>0);
+    }
 }

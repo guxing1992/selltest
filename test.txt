@@ -10,3 +10,15 @@ https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxea9e40a46a00afe9&secre
 
 
 http://ihzdc9.natappfree.cc/sell/wechat/authorize?returnUrl=http://www.imooc.com
+
+
+
+测试账号
+appID：wx9597d5af5dac67f6
+appsecret：1891adcc511b770907b535f893c9558b
+
+地址：http://elephant.s1.natapp.cc
+
+
+前端位置：/opt/code
+nginx配置：/usr/local/nginx/conf/nginx.conf

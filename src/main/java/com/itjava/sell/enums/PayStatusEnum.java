@@ -1,6 +1,6 @@
 package com.itjava.sell.enums;
 
-public enum PayStatusEnum {
+public enum PayStatusEnum implements CodeEnum{
     WAIT(0,"等待支付"),
     SUCCESS(1,"支付成功");
     private Integer code;
@@ -11,6 +11,7 @@ public enum PayStatusEnum {
         this.msg = msg;
     }
 
+    @Override
     public Integer getCode() {
         return code;
     }

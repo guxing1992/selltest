@@ -29,7 +29,7 @@ public class WeChatController {
 
         //2.调用方法
 
-        String url="http://ihzdc9.natappfree.cc/sell/wechat/userinfo";
+        String url="http://elephant.s1.natapp.cc/sell/wechat/userinfo";
         String resultUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, URLEncoder.encode(returnUrl));
 
         log.info("【微信网页授权】获取code,result={}",resultUrl);
