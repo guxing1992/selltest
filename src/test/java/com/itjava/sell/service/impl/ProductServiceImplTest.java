@@ -50,4 +50,16 @@ public class ProductServiceImplTest {
         }
 
     }
+
+    @Test
+    public void onSale() {
+        ProductInfo result = productService.onSale("wang0");
+        Assert.assertEquals(ProductStatusEnum.UP,result.getProductStatusEnum());
+    }
+
+    @Test
+    public void offSale() {
+        ProductInfo result = productService.offSale("wang12");
+        Assert.assertEquals(ProductStatusEnum.DOWN,result.getProductStatusEnum());
+    }
 }

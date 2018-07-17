@@ -1,9 +1,17 @@
 package com.itjava.sell.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.itjava.sell.enums.ProductStatusEnum;
+import com.itjava.sell.util.EnumUtil;
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.util.Date;
+
 @Entity
+@DynamicUpdate
 public class ProductInfo {
     @Id
     private String productId;
@@ -20,7 +28,31 @@ public class ProductInfo {
     /**
      * 商品状况 0，正常，1，下架
      */
-    private Integer productStatus;
+    private Integer productStatus=ProductStatusEnum.UP.getCode();
+
+
+    private Date createTime;
+    private Date updateTime;
+    @JsonIgnore
+    public ProductStatusEnum getProductStatusEnum(){
+        return EnumUtil.getByCode(productStatus,ProductStatusEnum.class);
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 
     public ProductInfo(String productId, String productName, BigDecimal productPrice, Integer productStock, String productDescription, String productIcon, Integer categoryType, Integer productStatus) {
         this.productId = productId;
