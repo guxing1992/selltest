@@ -2,7 +2,6 @@ package com.itjava.sell.form;
 
 import lombok.Data;
 
-import javax.persistence.Id;
 import java.math.BigDecimal;
 
 @Data
