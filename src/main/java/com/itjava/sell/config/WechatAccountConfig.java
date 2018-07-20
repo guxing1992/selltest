@@ -1,10 +1,12 @@
 package com.itjava.sell.config;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(prefix = "wechat")
+@Data
 public class WechatAccountConfig {
     private String mpAppId;
     private String mpAppSecret;
@@ -25,51 +27,7 @@ public class WechatAccountConfig {
 
     private String notifyUrl;
 
-    public String getNotifyUrl() {
-        return notifyUrl;
-    }
+    private String openAppId;
 
-    public void setNotifyUrl(String notifyUrl) {
-        this.notifyUrl = notifyUrl;
-    }
-
-    public String getMchId() {
-        return mchId;
-    }
-
-    public void setMchId(String mchId) {
-        this.mchId = mchId;
-    }
-
-    public String getMchKey() {
-        return mchKey;
-    }
-
-    public void setMchKey(String mchKey) {
-        this.mchKey = mchKey;
-    }
-
-    public String getKeyPath() {
-        return keyPath;
-    }
-
-    public void setKeyPath(String keyPath) {
-        this.keyPath = keyPath;
-    }
-
-    public String getMpAppId() {
-        return mpAppId;
-    }
-
-    public void setMpAppId(String mpAppId) {
-        this.mpAppId = mpAppId;
-    }
-
-    public String getMpAppSecret() {
-        return mpAppSecret;
-    }
-
-    public void setMpAppSecret(String mpAppSecret) {
-        this.mpAppSecret = mpAppSecret;
-    }
+    private String openAppSecret;
 }
