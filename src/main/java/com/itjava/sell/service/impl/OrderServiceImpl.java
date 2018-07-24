@@ -12,9 +12,7 @@ import com.itjava.sell.enums.OrderStatusEnum;
 import com.itjava.sell.enums.PayStatusEnum;
 import com.itjava.sell.enums.ResultEnum;
 import com.itjava.sell.exception.SellException;
-import com.itjava.sell.service.OrderService;
-import com.itjava.sell.service.PayService;
-import com.itjava.sell.service.ProductService;
+import com.itjava.sell.service.*;
 import com.itjava.sell.util.KeyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +25,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -41,6 +41,12 @@ public class OrderServiceImpl implements OrderService {
     private PayService payService;
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private PushMessageService pushMessageService;
+
+    @Autowired
+    private WebSocket webSocket;
     @Override
     @Transactional
     public OrderDTO create(OrderDTO orderDTO) {
@@ -48,16 +54,24 @@ public class OrderServiceImpl implements OrderService {
         BigDecimal amount=new BigDecimal(0);
         //1.查询商品（数量，价格）
         for (OrderDetail orderDetail:orderDTO.getOrderDetailList()){
-            ProductInfo productInfo = productService.findOne(orderDetail.getProductId());
-            if (productInfo==null){
+            try {
+                ProductInfo productInfo = productService.findOne(orderDetail.getProductId());
+                if (productInfo==null){
+                    throw new SellException(ResultEnum.PRODUCT_NO_EXIT);
+
+                }
+                //2.计算订单总价
+                amount=productInfo.getProductPrice().multiply(new BigDecimal(orderDetail.getProductQuantity())).add(amount);
+                orderDetail.setDetailId(KeyUtils.genUniqueKey());
+                orderDetail.setOrderId(orderId);
+                BeanUtils.copyProperties(productInfo,orderDetail);
+                orderDetailRepository.save(orderDetail);
+            }catch (NoSuchElementException e){
                 throw new SellException(ResultEnum.PRODUCT_NO_EXIT);
             }
-            //2.计算订单总价
-            amount=productInfo.getProductPrice().multiply(new BigDecimal(orderDetail.getProductQuantity())).add(amount);
-            orderDetail.setDetailId(KeyUtils.genUniqueKey());
-            orderDetail.setOrderId(orderId);
-            BeanUtils.copyProperties(productInfo,orderDetail);
-            orderDetailRepository.save(orderDetail);
+
+
+
 
         }
         //3.写入订单数据库
@@ -74,6 +88,12 @@ public class OrderServiceImpl implements OrderService {
                 new CartDTO(e.getProductId(),e.getProductQuantity())).collect(Collectors.toList());
 
         productService.decreaseStock(cartDTOList);
+        //发送websocket消息
+        try {
+            webSocket.sendMessage(orderDTO.getOrderId());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return orderDTO;
     }
 
@@ -157,6 +177,9 @@ public class OrderServiceImpl implements OrderService {
             log.error("【完结订单】更新失败, orderMaster={}", orderMaster);
             throw new SellException(ResultEnum.ORDER_UPDATE_FAIL);
         }
+
+        //推送微信模板消息
+        pushMessageService.orderStatus(orderDTO);
         return orderDTO;
     }
 

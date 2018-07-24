@@ -10,6 +10,8 @@ import com.itjava.sell.service.ProductService;
 import com.itjava.sell.util.KeyUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -92,6 +94,8 @@ public class SellerProductController {
      * @return
      */
     @PostMapping("/save")
+//    @CachePut(cacheNames = "product",key = "123")
+    @CacheEvict(cacheNames = "product",key = "123")//在访问这个方法后驱逐缓存
     public ModelAndView save(@Valid ProductForm form, BindingResult bindingResult,Map<String,Object> map){
         if (bindingResult.hasErrors()){
             map.put("msg",bindingResult.getFieldError().getDefaultMessage());

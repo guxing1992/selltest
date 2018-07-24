@@ -1,7 +1,9 @@
 package com.itjava.sell.exception;
 
 import com.itjava.sell.enums.ResultEnum;
+import lombok.Getter;
 
+@Getter
 public class SellException extends RuntimeException {
     private Integer code;
 

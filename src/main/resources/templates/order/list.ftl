@@ -85,6 +85,63 @@
         </div>
     </div>
 </div>
+<#--弹窗-->
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">
+                    提醒
+                </h4>
+            </div>
+            <div class="modal-body">
+                有新的订单...
+            </div>
+            <div class="modal-footer">
+                <button onclick="javascript:document.getElementById('notice').pause()" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button onclick="location.reload()" type="button" class="btn btn-primary">查看新的订单</button>
+            </div>
+        </div>
 
+    </div>
+
+</div>
+<#--播放音乐-->
+<audio id="notice" loop="loop">
+    <source src="/sell/mp3/song.mp3" type="audio/mpeg">
+</audio>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script>
+    var websocket=null;
+    var wsUri ="ws://elephant.s1.natapp.cc/sell/webSocket";
+    if (window.WebSocket) {
+        console.log('This browser supports WebSocket');
+        websocket=new WebSocket(wsUri);
+    }else{
+        console.log('This browser does not supports WebSocket');
+    }
+
+    websocket.onopen = function(event) {
+        console.log("建立链接");
+    };
+    websocket.onclose = function(evt) {
+        console.log("关闭链接");
+    };
+
+    websocket.onmessage = function(evt) {
+        console.log("收到消息："+evt.data);
+        //弹窗提示，播放音乐
+        $("#myModal").modal("show");
+        document.getElementById("notice").play();
+    };
+    websocket.onerror = function(evt) {
+        alert("websocket通信发生错误！");
+    };
+    window.onbeforeunload=function (ev) {
+        websocket.close();
+    }
+</script>
 </body>
 </html>

@@ -33,7 +33,7 @@ public class SellerOrderController {
      * @return
      */
     @GetMapping("/list")
-    public ModelAndView list(@RequestParam(value = "page",defaultValue = "1") Integer page,@RequestParam(value = "size",defaultValue = "2") Integer size,
+    public ModelAndView list(@RequestParam(value = "page",defaultValue = "1") Integer page,@RequestParam(value = "size",defaultValue = "10") Integer size,
                              Map<String,Object> map){
         Pageable pageable=PageRequest.of(page-1,size);
         Page<OrderDTO> orderDTOPage = orderService.findList(pageable);

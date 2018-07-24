@@ -8,6 +8,8 @@ import com.itjava.sell.enums.ResultEnum;
 import com.itjava.sell.exception.SellException;
 import com.itjava.sell.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductInfoRepository productInfoRepository;
     @Override
-    @Transactional
+//    @Cacheable(cacheNames = "product",key = "123")
     public ProductInfo findOne(String productId) {
 //        return productInfoRepository.getOne(productId);
         return productInfoRepository.findById(productId).get();
@@ -36,6 +38,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+//    @CachePut(cacheNames = "product",key = "123")
     public ProductInfo save(ProductInfo productInfo) {
         return productInfoRepository.save(productInfo);
     }

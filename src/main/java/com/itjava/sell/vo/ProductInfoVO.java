@@ -2,9 +2,11 @@ package com.itjava.sell.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class ProductInfoVO {
+public class ProductInfoVO implements Serializable {
+    private static final long serialVersionUID = -8815432196575042846L;
     @JsonProperty("id")
     private String productId;
     @JsonProperty("name")

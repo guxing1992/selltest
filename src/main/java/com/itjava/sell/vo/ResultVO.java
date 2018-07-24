@@ -1,8 +1,10 @@
 package com.itjava.sell.vo;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ResultVO<T> {
+public class ResultVO<T> implements Serializable {
+    private static final long serialVersionUID = -5361662847667093305L;
     private Integer code;
     private String msg;
     private T data;

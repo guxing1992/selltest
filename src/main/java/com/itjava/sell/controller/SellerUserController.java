@@ -59,6 +59,7 @@ public class SellerUserController {
         if (cookie!=null){
             //2.清楚redis
             redisTemplate.opsForValue().getOperations().delete(String.format(RedisConstant.TOKEN_PREFIX,cookie.getValue()));
+
             //3.清楚cookie
             CookieUtil.set(response,CookieConstant.TOKEN,null,0);
         }
